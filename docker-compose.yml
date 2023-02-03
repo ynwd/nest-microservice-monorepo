@@ -1,0 +1,23 @@
+version: "3.9"
+services:
+  postgres:
+    container_name: tmpl_db
+    image: postgres:14.4-alpine
+    ports:
+      - 5432:5432
+    env_file:
+      - .env
+    environment:
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
+
+  redis:
+    container_name: user_public_redis
+    image: redis:7.0.3-alpine
+    ports:
+      - 6379:6379
+    env_file:
+      - .env
+    command: >
+      --requirepass ${REDIS_PASSWORD}
